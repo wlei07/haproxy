@@ -1,0 +1,38 @@
+services:
+  # service name also used in httpd.conf ServerName field
+  httpd1:
+    image: 'httpd:latest'
+    container_name: httpd1
+    volumes:
+      - ./httpd1/httpd1.conf:/usr/local/apache2/conf/httpd.conf
+      - ./httpd1/index.html:/usr/local/apache2/htdocs/index.html
+    networks:
+      httpd_cluster:
+        ipv4_address: 172.10.0.2
+  httpd2:
+    image: 'httpd:latest'
+    container_name: httpd2
+    volumes:
+      - ./httpd2/httpd2.conf:/usr/local/apache2/conf/httpd.conf
+      - ./httpd2/index.html:/usr/local/apache2/htdocs/index.html
+    networks:
+      httpd_cluster:
+        ipv4_address: 172.10.0.3
+  haproxy:
+    image: 'haproxy'
+    container_name: haproxy
+    ports:
+      - '8088:8088'
+      - '8081:8081'
+    volumes:
+      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+    networks:
+      httpd_cluster:
+        ipv4_address: 172.10.0.4
+
+networks:
+  httpd_cluster:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.10.0.0/16
