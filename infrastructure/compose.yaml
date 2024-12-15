@@ -24,12 +24,26 @@ services:
     ports:
       - '8088:8088'
       - '8081:8081'
+      - '8443:8443'
     volumes:
       - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+      - ./combined.pem:/etc/haproxy/ssl/combined.pem
     networks:
       httpd_cluster:
         ipv4_address: 172.10.0.4
-
+  haproxy2:
+    image: 'haproxy'
+    container_name: haproxy2
+    ports:
+      - '8089:8088'
+      - '8082:8081'
+      - '8444:8443'
+    volumes:
+      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+      - ./combined.pem:/etc/haproxy/ssl/combined.pem
+    networks:
+      httpd_cluster:
+        ipv4_address: 172.10.0.5
 networks:
   httpd_cluster:
     driver: bridge
