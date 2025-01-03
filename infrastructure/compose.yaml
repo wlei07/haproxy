@@ -1,7 +1,7 @@
 services:
   # service name also used in httpd.conf ServerName field
   httpd1:
-    image: 'httpd:latest'
+    image: 'httpd:2.4.62'
     container_name: httpd1
     volumes:
       - ./httpd1/httpd1.conf:/usr/local/apache2/conf/httpd.conf
@@ -10,7 +10,7 @@ services:
       httpd_cluster:
         ipv4_address: 172.10.0.2
   httpd2:
-    image: 'httpd:latest'
+    image: 'httpd:2.4.62'
     container_name: httpd2
     volumes:
       - ./httpd2/httpd2.conf:/usr/local/apache2/conf/httpd.conf
@@ -19,7 +19,7 @@ services:
       httpd_cluster:
         ipv4_address: 172.10.0.3
   haproxy:
-    image: 'haproxy'
+    image: 'haproxy:2.4.22'
     container_name: haproxy
     ports:
       - '8088:8088'
@@ -32,7 +32,7 @@ services:
       httpd_cluster:
         ipv4_address: 172.10.0.4
   haproxy2:
-    image: 'haproxy'
+    image: 'haproxy:2.4.22'
     container_name: haproxy2
     ports:
       - '8089:8088'
