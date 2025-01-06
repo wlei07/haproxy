@@ -6,6 +6,7 @@ services:
     volumes:
       - ./httpd1/httpd1.conf:/usr/local/apache2/conf/httpd.conf
       - ./httpd1/index.html:/usr/local/apache2/htdocs/index.html
+      - ./httpd1/index.css:/usr/local/apache2/htdocs/index.css
     networks:
       httpd_cluster:
         ipv4_address: 172.10.0.2
