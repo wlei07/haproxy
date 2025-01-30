@@ -45,6 +45,18 @@ services:
     networks:
       httpd_cluster:
         ipv4_address: 172.10.0.5
+  mock-smtp:
+    container_name: mock-smtp
+    image: mailhog/mailhog:v1.0.1
+    restart: on-failure:3
+    ports:
+      # SMTP port:
+      - "1025:1025"
+      # Web UI port:
+      - "8025:8025"
+    networks:
+      httpd_cluster:
+        ipv4_address: 172.10.0.6
 networks:
   httpd_cluster:
     driver: bridge
